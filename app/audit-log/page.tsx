@@ -26,7 +26,7 @@ export default function AuditLogPage() {
             {CATEGORIES.map(c=><option key={c}>{c}</option>)}
           </select>
         </div>
-        <button className="btn btn-sm" style={{marginLeft:'auto'}} onClick={()=>showToast('Downloading audit log...')}>↓ Download</button>
+        <button className="btn btn-sm" style={{marginLeft:'auto',marginRight:10}} onClick={()=>showToast('Downloading audit log...')}>↓ Download</button>
       </div>
       <div className="table-wrap">
         <table>

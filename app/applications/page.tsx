@@ -34,7 +34,7 @@ function ApplicationsContent() {
             {STATUSES.map(s=><option key={s}>{s}</option>)}
           </select>
         </div>
-        <div style={{marginLeft:'auto',fontSize:12,color:'var(--text-tertiary)',fontWeight:500}}>{results.length} results</div>
+        <div className="filter-bar-meta">{results.length} results</div>
       </div>
       <div className="table-wrap">
         <table>

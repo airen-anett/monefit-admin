@@ -1,5 +1,6 @@
 'use client';
 import { use, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getUserById, getCardByToken, getCardsByUser, getTransactionsByUser } from '../../../../lib/data';
 import { Badge } from '../../../../components/Badge';
@@ -25,6 +26,7 @@ const CURRENT_ROLE: string = 'support';
 
 export default function CardPage({ params }: { params: Promise<{ id: string; cardId: string }> }) {
   const { id, cardId } = use(params);
+  const router = useRouter();
   const user = getUserById(id);
   const card = getCardByToken(cardId);
   const [tab, setTab] = useState('Overview');
@@ -93,23 +95,25 @@ export default function CardPage({ params }: { params: Promise<{ id: string; car
                 ))}
               </div>
             </div>
-            <div className="card">
-              <div className="card-title">Transactions</div>
-              {trxs.length === 0 ? <div className="empty-state">No transactions</div> : (
-                <div style={{overflowX:'auto'}}>
-                  <table style={{width:'100%',borderCollapse:'collapse'}}>
-                    <thead><tr><Th>Trx ID</Th><Th>Date/time ↓</Th><Th>Type</Th><Th>Status</Th><Th>Merchant</Th><Th>MCC</Th><Th>Billing</Th><Th>Trx amt.</Th><Th>Balance</Th></tr></thead>
+            <div className="card card-table-section">
+              <div className="card-table-section-header">
+                <div className="card-title" style={{marginBottom:0}}>Transactions</div>
+              </div>
+              {trxs.length === 0 ? <div className="empty-state" style={{padding:'0 20px 16px'}}>No transactions</div> : (
+                <div className="table-wrap card-table-wrap">
+                  <table>
+                    <thead><tr><th>Trx ID</th><th>Date/time ↓</th><th>Type</th><th>Status</th><th>Merchant</th><th>MCC</th><th>Billing</th><th>Trx amt.</th><th>Balance</th></tr></thead>
                     <tbody>
                       {trxs.map(t=>(
-                        <tr key={t.id}>
-                          <Td style={{fontFamily:'monospace',fontSize:11,color:'var(--text-secondary)'}}>{t.id}</Td>
-                          <Td style={{color:'var(--text-secondary)'}}>{t.dt}</Td>
-                          <Td>{t.type}</Td>
-                          <Td><Badge status={t.status}/></Td>
-                          <Td style={{fontWeight:500}}>{t.merchant}</Td>
-                          <Td style={{color:'var(--text-secondary)'}}>{t.mcc}</Td>
-                          <Td>{t.billing}</Td><Td>{t.trx}</Td>
-                          <Td style={{fontWeight:600}}>{t.balance}</Td>
+                        <tr key={t.id} className="clickable" onClick={()=>router.push(`/transactions/${t.id}`)}>
+                          <td style={{fontFamily:'monospace',fontSize:11,color:'var(--text-secondary)'}}>{t.id}</td>
+                          <td style={{color:'var(--text-secondary)'}}>{t.dt}</td>
+                          <td>{t.type}</td>
+                          <td><Badge status={t.status}/></td>
+                          <td>{t.merchant}</td>
+                          <td style={{color:'var(--text-secondary)'}}>{t.mcc}</td>
+                          <td>{t.billing}</td><td>{t.trx}</td>
+                          <td>{t.balance}</td>
                         </tr>
                       ))}
                     </tbody>

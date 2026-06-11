@@ -1,20 +1,25 @@
 'use client';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { APPLICATIONS } from './lib/data';
+import { Badge } from './components/Badge';
 
 export default function Dashboard() {
   const router = useRouter();
   const stats = [
     { label:'Total users', value:'1,284', color:'var(--metric-violet)', href:'/users', filter:null },
     { label:'Active agreements', value:'892', color:'#7EC8A8', href:null, filter:null },
-    { label:'Transactions today', value:'347', color:'#8EC5E8', href:null, filter:null },
+    { label:'Transactions today', value:'347', color:'#8EC5E8', href:'/transactions', filter:null },
     { label:'Incoming applications', value:'14', color:'#E8C87A', href:'/applications?status=Incoming', filter:'Incoming' },
   ];
+
+  const queue = APPLICATIONS
+    .filter(a => a.status === 'In review' || a.status === 'Incoming')
+    .sort((a, b) => b.submitted.localeCompare(a.submitted));
+
   return (
     <div className="content">
       <div className="page-title">Dashboard</div>
-      <div className="info-note" style={{marginBottom:18}}>
-        Dashboard metrics will be available in a future release. KPIs such as daily applications, active agreements, and transaction volumes will appear here.
-      </div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12,marginBottom:20}}>
         {stats.map(s=>(
           <div key={s.label} className="card" style={{padding:'18px 20px',cursor:s.href?'pointer':'default',borderTop:`3px solid ${s.color}`,transition:'all 0.15s'}}
@@ -27,11 +32,41 @@ export default function Dashboard() {
           </div>
         ))}
       </div>
-      <div className="card" style={{height:220,display:'flex',alignItems:'center',justifyContent:'center',color:'var(--text-tertiary)'}}>
-        <div style={{textAlign:'center'}}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} style={{width:38,height:38,margin:'0 auto 10px',display:'block',opacity:0.4}}><path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
-          <div style={{fontWeight:500,marginBottom:4}}>Analytics coming soon</div>
-          <div style={{fontSize:12}}>Charts and KPIs will appear here in the next release</div>
+
+      <div className="card dashboard-queue">
+        <div className="dashboard-queue-header">
+          <div>
+            <div style={{fontSize:15,fontWeight:600,letterSpacing:'-0.2px'}}>Applications queue</div>
+            <div style={{fontSize:12,color:'var(--text-secondary)',marginTop:2}}>Awaiting decision or in manual review</div>
+          </div>
+          <Link href="/applications" className="dashboard-queue-link">View all →</Link>
+        </div>
+        <div className="table-wrap dashboard-queue-table">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Applicant</th>
+                <th>Product</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Submitted ↓</th>
+              </tr>
+            </thead>
+            <tbody>
+              {queue.map(a => (
+                <tr key={a.id} className="clickable" onClick={() => router.push(`/applications/${a.id}`)}>
+                  <td>{a.id}</td>
+                  <td>{a.applicantName}</td>
+                  <td style={{color:'var(--text-secondary)'}}>{a.product}</td>
+                  <td style={{fontWeight:600}}>{a.amount}</td>
+                  <td><Badge status={a.status} /></td>
+                  <td style={{color:'var(--text-secondary)'}}>{a.submitted}</td>
+                </tr>
+              ))}
+              {queue.length === 0 && <tr><td colSpan={6} className="empty-state">No applications in queue</td></tr>}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

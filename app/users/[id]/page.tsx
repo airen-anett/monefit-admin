@@ -270,24 +270,26 @@ export default function UserPage({ params }: { params: Promise<{ id: string }> }
                 <div key={l} className="stat-box"><div className="stat-box-label">{l}</div><div className="stat-box-val" style={{color:c}}>{v}</div></div>
               ))}
             </div>
-            <div className="card">
-              <div className="card-title">Transactions</div>
-              {trxs.length === 0 ? <div className="empty-state">No transactions</div> : (
-                <div style={{overflowX:'auto'}}>
-                  <table style={{width:'100%',borderCollapse:'collapse'}}>
-                    <thead><tr><Th>Trx ID</Th><Th>Date/time ↓</Th><Th>Type</Th><Th>Status</Th><Th>Merchant</Th><Th>MCC</Th><Th>Billing</Th><Th>Trx amt.</Th><Th>Reason code</Th><Th>Balance</Th></tr></thead>
+            <div className="card card-table-section">
+              <div className="card-table-section-header">
+                <div className="card-title" style={{marginBottom:0}}>Transactions</div>
+              </div>
+              {trxs.length === 0 ? <div className="empty-state" style={{padding:'0 20px 16px'}}>No transactions</div> : (
+                <div className="table-wrap card-table-wrap">
+                  <table>
+                    <thead><tr><th>Trx ID</th><th>Date/time ↓</th><th>Type</th><th>Status</th><th>Merchant</th><th>MCC</th><th>Billing</th><th>Trx amt.</th><th>Reason code</th><th>Balance</th></tr></thead>
                     <tbody>
                       {trxs.map(t=>(
-                        <tr key={t.id}>
-                          <Td style={{fontFamily:'monospace',fontSize:11,color:'var(--text-secondary)'}}>{t.id}</Td>
-                          <Td style={{color:'var(--text-secondary)'}}>{t.dt}</Td>
-                          <Td>{t.type}</Td>
-                          <Td><Badge status={t.status}/></Td>
-                          <Td style={{fontWeight:500}}>{t.merchant}</Td>
-                          <Td style={{color:'var(--text-secondary)'}}>{t.mcc}</Td>
-                          <Td>{t.billing}</Td><Td>{t.trx}</Td>
-                          <Td style={{color:t.reasonCode.startsWith('00')?'var(--emerald)':t.reasonCode?'var(--rose)':'var(--text-tertiary)',fontSize:11,fontFamily:'monospace'}}>{t.reasonCode||'—'}</Td>
-                          <Td style={{fontWeight:600}}>{t.balance}</Td>
+                        <tr key={t.id} className="clickable" onClick={()=>router.push(`/transactions/${t.id}`)}>
+                          <td style={{fontFamily:'monospace',fontSize:11,color:'var(--text-secondary)'}}>{t.id}</td>
+                          <td style={{color:'var(--text-secondary)'}}>{t.dt}</td>
+                          <td>{t.type}</td>
+                          <td><Badge status={t.status}/></td>
+                          <td>{t.merchant}</td>
+                          <td style={{color:'var(--text-secondary)'}}>{t.mcc}</td>
+                          <td>{t.billing}</td><td>{t.trx}</td>
+                          <td style={{color:t.reasonCode.startsWith('00')?'var(--emerald)':t.reasonCode?'var(--rose)':'var(--text-tertiary)',fontSize:11,fontFamily:'monospace'}}>{t.reasonCode||'—'}</td>
+                          <td>{t.balance}</td>
                         </tr>
                       ))}
                     </tbody>

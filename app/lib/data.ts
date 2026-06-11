@@ -164,6 +164,13 @@ export interface Transaction {
   reasonCode: string;
   balance: string;
   userId: string;
+  cardToken: string;
+  responseStatus: string;
+  stan: string;
+  processingCode: string;
+  authCode: string;
+  network: string;
+  cardType: string;
 }
 
 export interface Payment {
@@ -346,11 +353,12 @@ export const CARDS: Card[] = [
 ];
 
 export const TRANSACTIONS: Transaction[] = [
-  { id: '13a97e-5d', dt: '18/05/2026 07:23', type: 'Authorisation', status: 'Accepted', merchant: 'Udu', mcc: '5812', billing: '€15.00', trx: '€15.00', reasonCode: '00-Approved', balance: '€150.00', userId: 'u1' },
-  { id: '8c1e7d-2f', dt: '17/05/2026 18:53', type: 'Presentment', status: 'Cleared', merchant: 'IKEA', mcc: '5411', billing: '€134.50', trx: '€134.50', reasonCode: '', balance: '€134.50', userId: 'u1' },
-  { id: 'b74f91-8a', dt: '17/05/2026 16:42', type: 'Settlement', status: 'Settled', merchant: 'Prisma', mcc: '5411', billing: '€65.20', trx: '€65.20', reasonCode: '', balance: '€650.20', userId: 'u1' },
-  { id: '2d8b3a-41', dt: '17/05/2026 14:36', type: 'Monthly fee', status: 'Declined', merchant: 'Netflix', mcc: '4899', billing: '$15.00', trx: '€12.88', reasonCode: '62-Restricted card', balance: '€120.88', userId: 'u1' },
-  { id: '9a6c81-7d', dt: '17/05/2026 12:04', type: 'Authorisation', status: 'Accepted', merchant: 'IKEA', mcc: '5712', billing: '€134.50', trx: '€134.50', reasonCode: '00-Approved', balance: '€434.50', userId: 'u1' },
+  { id: '92e7d4b0f3', dt: '18/05/2026 07:23:09', type: 'Authorisation', status: 'Accepted', merchant: 'IKEA', mcc: '5411', billing: '€134.50', trx: '€134.50', reasonCode: '00-Approved', balance: '€150.00', userId: 'u1', cardToken: '53214221', responseStatus: '00 - Approved', stan: '1234567', processingCode: '3600000', authCode: '363544', network: 'Mastercard', cardType: 'Physical' },
+  { id: '13a97e-5d', dt: '18/05/2026 07:23', type: 'Authorisation', status: 'Accepted', merchant: 'Udu', mcc: '5812', billing: '€15.00', trx: '€15.00', reasonCode: '00-Approved', balance: '€150.00', userId: 'u1', cardToken: '53214221', responseStatus: '00 - Approved', stan: '1234566', processingCode: '3600000', authCode: '363543', network: 'Mastercard', cardType: 'Virtual' },
+  { id: '8c1e7d-2f', dt: '17/05/2026 18:53', type: 'Presentment', status: 'Cleared', merchant: 'IKEA', mcc: '5411', billing: '€134.50', trx: '€134.50', reasonCode: '', balance: '€134.50', userId: 'u1', cardToken: '53214221', responseStatus: '00 - Approved', stan: '1234565', processingCode: '3600000', authCode: '363542', network: 'Mastercard', cardType: 'Virtual' },
+  { id: 'b74f91-8a', dt: '17/05/2026 16:42', type: 'Settlement', status: 'Settled', merchant: 'Prisma', mcc: '5411', billing: '€65.20', trx: '€65.20', reasonCode: '', balance: '€650.20', userId: 'u1', cardToken: '53214221', responseStatus: '00 - Approved', stan: '1234564', processingCode: '3600000', authCode: '363541', network: 'Mastercard', cardType: 'Virtual' },
+  { id: '2d8b3a-41', dt: '17/05/2026 14:36', type: 'Monthly fee', status: 'Declined', merchant: 'Netflix', mcc: '4899', billing: '$15.00', trx: '€12.88', reasonCode: '51-insufficient funds', balance: '€120.88', userId: 'u1', cardToken: '59039012', responseStatus: '51 - Insufficient funds', stan: '1234563', processingCode: '3600000', authCode: '363540', network: 'Mastercard', cardType: 'Physical' },
+  { id: '9a6c81-7d', dt: '17/05/2026 12:04', type: 'Authorisation', status: 'Accepted', merchant: 'IKEA', mcc: '5712', billing: '€134.50', trx: '€134.50', reasonCode: '00-Approved', balance: '€434.50', userId: 'u1', cardToken: '53214221', responseStatus: '00 - Approved', stan: '1234562', processingCode: '3600000', authCode: '363539', network: 'Mastercard', cardType: 'Virtual' },
 ];
 
 export const PAYMENTS: Payment[] = [
@@ -464,6 +472,7 @@ export function getAgreementsByUser(userId: string) { return AGREEMENTS.filter(a
 export function getCardsByUser(userId: string) { return CARDS.filter(c => c.userId === userId); }
 export function getCardByToken(token: string) { return CARDS.find(c => c.token === token); }
 export function getTransactionsByUser(userId: string) { return TRANSACTIONS.filter(t => t.userId === userId); }
+export function getTransactionById(id: string) { return TRANSACTIONS.find(t => t.id === id); }
 export function getPaymentsByUser(userId: string) { return PAYMENTS.filter(p => p.userId === userId); }
 export function getInvoicesByUser(userId: string) { return INVOICES.filter(i => i.userId === userId); }
 export function getCommunicationsByUser(userId: string) { return COMMUNICATIONS.filter(c => c.userId === userId); }

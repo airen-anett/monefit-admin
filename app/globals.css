@@ -116,8 +116,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 
 /* Tables */
 .table-wrap{background:var(--bg-card);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
-table{width:100%;border-collapse:collapse}
+table{width:100%;border-collapse:separate;border-spacing:0}
 thead th{padding:9px 16px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-primary);border-bottom:0.5px solid var(--border);background:var(--metric-violet-light);white-space:nowrap}
+thead tr:first-child th:first-child{border-top-left-radius:var(--radius)}
+thead tr:first-child th:last-child{border-top-right-radius:var(--radius)}
 tbody td{padding:11px 16px;border-bottom:0.5px solid var(--border);font-size:13px;color:var(--text-primary)}
 tbody tr:last-child td{border-bottom:none}
 tbody tr.clickable:hover td{background:var(--bg-hover);cursor:pointer}
@@ -198,6 +200,8 @@ tbody tr.clickable:hover td{background:var(--bg-hover);cursor:pointer}
 
 /* Filter bar */
 .filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.filter-bar-meta{margin-left:auto;margin-right:10px;font-size:12px;color:var(--text-tertiary);font-weight:500;white-space:nowrap}
+.topbar-actions{margin-left:auto;margin-right:10px;display:flex;align-items:center;gap:8px}
 .filter-bar input{padding:7px 12px;border:0.5px solid var(--border-strong);border-radius:7px;font-size:13px;background:var(--bg-card);color:var(--text-primary);outline:none;width:280px;font-family:inherit;transition:all 0.15s}
 .filter-bar input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px var(--indigo-light)}
 .filter-bar input::placeholder{color:var(--text-tertiary)}
@@ -320,3 +324,25 @@ textarea.input-field{resize:vertical;min-height:80px}
 .risk-low{color:var(--emerald);font-weight:600}
 .risk-med{color:var(--amber);font-weight:600}
 .risk-high{color:var(--rose);font-weight:600}
+
+/* Dashboard queue */
+.dashboard-queue{padding:0;overflow:hidden}
+.dashboard-queue-header{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 20px 14px}
+.dashboard-queue-link{font-size:13px;color:var(--indigo);text-decoration:none;font-weight:500}
+.dashboard-queue-table{border:none;border-radius:0;box-shadow:none;border-top:0.5px solid var(--border)}
+
+/* Card-embedded tables */
+.card-table-section{padding:0;overflow:hidden}
+.card-table-section-header{padding:16px 20px 14px}
+.card-table-wrap{border:none;border-radius:0;box-shadow:none;border-top:0.5px solid var(--border)}
+.card-table-wrap thead tr:first-child th:first-child,
+.card-table-wrap thead tr:first-child th:last-child{border-top-left-radius:0;border-top-right-radius:0}
+.dashboard-queue-table thead tr:first-child th:first-child,
+.dashboard-queue-table thead tr:first-child th:last-child{border-top-left-radius:0;border-top-right-radius:0}
+
+/* Transaction detail */
+.trx-detail-card{background:var(--bg-subtle)}
+.trx-detail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 24px}
+.trx-detail-label{font-size:11px;font-weight:600;margin-bottom:4px;color:var(--text-primary)}
+.trx-detail-value{font-size:13px;color:var(--text-primary)}
+.trx-detail-divider{height:0.5px;background:var(--border);margin:16px 0}

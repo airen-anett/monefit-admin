@@ -8,6 +8,7 @@ import { USERS } from './lib/data';
 const NAV = [
   { href:'/', label:'Dashboard', section:'WORKSPACE', d:'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
   { href:'/users', label:'Users', section:null, d:'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' },
+  { href:'/transactions', label:'Transactions', section:null, d:'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z' },
   { href:'/applications', label:'Applications', section:'OPERATIONS', d:'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
   { href:'/disputes', label:'Disputes', section:null, d:'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z' },
   { href:'/feature-flags', label:'Feature flags', section:'ADMIN', d:'M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9' },
@@ -129,7 +130,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   </div>
                 )}
               </div>
-              <div style={{marginLeft:'auto',display:'flex',alignItems:'center',gap:8}}>
+              <div className="topbar-actions">
                 <div style={{fontSize:12,color:'var(--text-tertiary)'}}>
                   {new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}
                 </div>
